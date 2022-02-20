@@ -1,11 +1,11 @@
 import './style.css';
 
-function component() {
-    const element = document.createElement('div');
+// function component() {
+//     const element = document.createElement('div');
   
-    element.innerHTML = "webpack test 123"
+//     element.innerHTML = "webpack test 123"
   
-    document.body.appendChild(element);
-  }
+//     document.body.appendChild(element);
+//   }
 
-  component();
+//   component();

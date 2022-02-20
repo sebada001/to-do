@@ -1,3 +1,230 @@
+@font-face {
+    font-family: "Lato";
+    src: url(./fonts/Lato-Regular.ttf);
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Lato";
+    src: url(./fonts/Lato-Bold.ttf);
+    font-style: normal;
+    font-weight: 700;
+}
+@font-face {
+    font-family: "Lato";
+    src: url(./fonts/Lato-Thin.ttf);
+    font-style: normal;
+    font-weight: 250;
+}
+
 *{
-    color: red;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: "Lato";
+}
+
+
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(64, 77, 72);
+    background-size: cover;
+    background-position: 0% 60%;
+    align-items: center;
+}
+
+.container{
+    width: 70%;
+    min-height: 80vh;
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+    grid-template-columns: 1fr 3fr;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.header{
+    grid-row: 1/2;
+    grid-column: 1/3;
+    width: 100%;
+    background-color: rgb(21, 179, 105);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    color: white;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.right{
+    border:2px solid rgb(64, 77, 72);
+    background-color: rgb(30, 155, 97);
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.right:hover{
+    scale: 1.05;
+}
+
+.control-panel{
+    grid-row: 2/3;
+    grid-column: 1/2;
+    background-color: rgb(231, 231, 231);
+    display: flex;
+    flex-direction: column;
+}
+
+ul li{
+    margin-bottom: 1rem;
+}
+
+.control-panel > *{
+    margin: 2rem;
+}
+
+.projects{
+    margin-right: 0;
+    margin-top: 0; 
+}
+
+.projects-title{
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px rgb(187, 187, 187) solid;
+    text-indent: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+.add-project-button{
+    margin-right: 1rem;
+    font-weight: 400;
+    border: none;
+    font-size: 20px;
+}
+button:hover{
+    scale: 1.2;
+    background: none;
+}
+
+.work-ul{
+    margin: 1rem 0 1rem 2.5rem;
+}
+.personal-ul{
+    margin: 1rem 0 1rem 2.5rem;
+}
+
+.urgent::before{
+    content: "";
+    height: 10px;
+    width: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+    background-color: rgb(226, 79, 79);
+    display: inline-block;
+} 
+
+.medium::before{
+    content: "";
+    height: 10px;
+    width: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+    background-color: rgb(226, 226, 94);
+    display: inline-block;
+} 
+
+.relax::before{
+    content: "";
+    height: 10px;
+    width: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+    background-color: rgb(97, 207, 97);
+    display: inline-block;
+} 
+
+.none::before{
+    content: "";
+    height: 10px;
+    width: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+    background-color: rgb(204, 204, 204);
+    display: inline-block;
+} 
+
+.display{
+    background-color: rgb(247, 247, 247);
+    padding: 4rem;
+}
+
+.display-title{
+    margin-bottom: 1rem;
+}
+
+.tasks-container{
+    display: flex;
+    flex-direction: column;
+}
+.task{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(187, 187, 187);
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.task-left{
+    display: flex;
+    align-items: center;
+}
+
+.task-right{
+    display: flex;
+    align-items: center;
+}
+
+.urgent-task::before{
+    content: "";
+    height: 10px;
+    width: 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: rgb(241, 154, 154);
+    border: 2px rgb(199, 0, 0) solid;
+    display: inline-block;
+} 
+
+.medium-task::before{
+    content: "";
+    height: 10px;
+    width: 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: rgb(241, 241, 188);
+    border: 2px rgb(226, 209, 54) solid;
+    display: inline-block;
+} 
+
+.add-task-left{
+    display: flex;
+    align-items: center;
+}
+.add-task-button{
+    margin-right: 1rem;
+    font-weight: 400;
+    border: none;
+    font-size: 20px;
+    background: none;
 }
