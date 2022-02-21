@@ -194,6 +194,13 @@ button:hover{
     display: flex;
     align-items: center;
 }
+.task-right > p:first-child{
+    
+}
+.task-right > p + p{
+    margin-left: 1rem;
+    color:rgb(114, 114, 114);
+}
 
 .urgent-task::before{
     content: "";
