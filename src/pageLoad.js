@@ -1,6 +1,31 @@
 export default function appSkeleton(){
     const htmlSkelly =
 `<div class="container">
+<div class="blackout"> </div>
+<div class="pop-up-project"> </div>
+<div class="pop-up-task"> 
+  <label for="name">Title (up to 20 characters):</label>
+  <input type="text" id="name" name="name" maxlength="20" size="13" placeholder="Potassium is very important">
+
+  <label for="description">Task description:</label>
+  <textarea id="description" name="description" rows="5" cols="33">I mustn't forget to peel the banana before I eat it... </textarea>
+
+  <label for="due-date">Due date:</label>
+  <input type="date" id="due-date" name="due-date" value="2023-03-23" min="2018-01-01" max="2030-12-31"> 
+
+  <div class="radio-container"> Priority:
+  <input type="radio" id="urgent" name="prio" value="urgent" checked class="radio">
+  <label for="urgent">Urgent</label>
+  
+  <input type="radio" id="medium" name="prio" value="medium" class="radio">
+  <label for="medium">Medium</label>
+
+  <input type="radio" id="relax" name="prio" value="relax" class="radio">
+  <label for="relax">Relax</label>
+  </div>
+  <button class="confirm">Add task</button>
+</div>
+
 <div class="header">
   <div class="left">To Do App</div>
   <div class="right">?</div>
@@ -18,6 +43,10 @@ export default function appSkeleton(){
       <button class="add-project-button">+</button>
     </div>
     <ul class="projects-ul">
+      <li>Work
+        <ul class="Work-ul"> 
+        </ul>
+      </li>
       
     </ul>
   </div>

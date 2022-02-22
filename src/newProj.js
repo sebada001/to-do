@@ -1,5 +1,6 @@
-const projectFactory = (name, color) =>{
-    return {name, color}
+const ProjectFactory = (name) =>{
+    const classTag = `${name}-ul`;
+    return {name, classTag}
 };
 
 export default function newProject(){
@@ -8,9 +9,13 @@ export default function newProject(){
 }
 
 const projectAdd = function(){
-    const projectUl = document.querySelector(".projects-ul");
-    const project = projectFactory(prompt("What will this project be called?"));
+    const container = document.querySelector(".projects-ul");
+    const projectObj = ProjectFactory(prompt("What will this project be called?"));
     const projectCapsule = document.createElement("li");
-    projectCapsule.textContent = project.name;
-    projectUl.appendChild(projectCapsule);
+    const subcategory = document.createElement("ul");
+    subcategory.classList.add(`${projectObj.classTag}`);
+    projectCapsule.textContent = projectObj.name;
+    projectCapsule.appendChild(subcategory);
+    container.appendChild(projectCapsule);
 }
+

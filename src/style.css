@@ -38,6 +38,7 @@ body{
 }
 
 .container{
+    position: relative;
     width: 70%;
     min-height: 80vh;
     display: grid;
@@ -45,6 +46,68 @@ body{
     grid-template-columns: 1fr 3fr;
     border-radius: 12px;
     overflow: hidden;
+}
+
+.blackout{
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.39);
+    z-index: 9;
+}
+.pop-up-task{
+    background-color: rgb(231, 231, 231);
+    border: 5px solid rgb(30, 155, 97);
+    border-radius: 10px;
+    position: absolute;
+    min-width: 900px;
+    min-height: 500px;
+    left: calc(50% - 450px);
+    top: calc(50% - 250px);
+    z-index: 10;
+    flex-direction: column;
+    display: none;
+}   
+
+.pop-up-task > *{
+    margin: 1rem 5rem;
+}
+
+#due-date{
+    width: 20%;
+}
+label{
+    margin-bottom: 0 !important;
+}
+
+.radio{
+    margin-left: 1rem;
+    margin-right: 0.2rem;
+}
+#urgent{
+    background-color: red;
+}
+
+
+.confirm{
+    width: 20%;
+    align-self: center;
+    border: none;
+    background-color: rgb(30, 155, 97);
+    border-radius: 5px;
+    height: 30px;
+    font-size: 18px;
+    color: white;
+}
+
+.confirm:hover{
+    color: rgb(30, 155, 97);
+}
+
+
+.pop-up-project{
+    display: none;
 }
 
 .header{
@@ -115,10 +178,17 @@ button:hover{
     scale: 1.2;
     background: none;
 }
+/* this selects the tasks listed below projects*/
+.projects-ul li ul li{
+    margin-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
 
 .work-ul{
     margin: 1rem 0 1rem 2.5rem;
 }
+
 .personal-ul{
     margin: 1rem 0 1rem 2.5rem;
 }
@@ -194,9 +264,7 @@ button:hover{
     display: flex;
     align-items: center;
 }
-.task-right > p:first-child{
-    
-}
+
 .task-right > p + p{
     margin-left: 1rem;
     color:rgb(114, 114, 114);
