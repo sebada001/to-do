@@ -44,7 +44,7 @@ export default function appSkeleton(){
     </div>
     <ul class="projects-ul">
       <li>Work
-        <ul class="Work-ul"> 
+        <ul class="class-Work-ul"> 
         </ul>
       </li>
       
@@ -65,4 +65,19 @@ export default function appSkeleton(){
 </div>`;
 
 document.body.innerHTML = htmlSkelly;
+
+const popUpTaskScreen = document.querySelector(".pop-up-task");
+const confirmButton = document.querySelector(".confirm");  
+const projectSelectionWindow = (()=>{
+    const select = document.createElement("select");
+    select.name = "proj-names";
+    select.id = "proj-names";
+ 
+    let label = document.createElement("label");
+    label.innerHTML = "Select project for this task: ";
+    label.htmlFor = "proj-names";
+
+    popUpTaskScreen.insertBefore(label, confirmButton);
+    popUpTaskScreen.insertBefore(select, confirmButton);
+})();
 }

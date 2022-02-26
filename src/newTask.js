@@ -1,59 +1,64 @@
+import {selectorOfProject, updateProjectList} from './projList.js';
+import thisPlay from './display.js';
 
+const taskArray = [];
+let updatedArray = [];
 
-const TaskFactory = (title, description, priority, dueDate, projectFamily) =>{
-    let prio = "";
-    if(priority == "urgent") {prio = "urgent" } else if(priority == "relax"){prio = "relax"} else{prio = "medium"};
-    return {title, description, prio, dueDate, projectFamily}
+const TaskFactory = (family) =>{
+    const title = document.querySelector("#name").value;
+    const description = document.querySelector("#description").textContent;
+    const dueDate = document.querySelector("#due-date").value;
+    const priority = document.querySelector('input[name="prio"]:checked').value; //selected checked value from radio
+    const projectFamily = family;
+    return {title, description, priority, dueDate, projectFamily}
 };
 
-export default function newTask(){
-    const popUpTask = document.querySelector(".pop-up-task");
-    const blackout = document.querySelector(".blackout");
-    const confirm = document.querySelector(".confirm");  
-    const butt = document.querySelector(".add-task-button");
-    butt.addEventListener('click',  ()=> {
-        popUp(popUpTask, blackout);
-        selectorOfProject();
+const newTask = function(){
+    const popUpTaskScreen = document.querySelector(".pop-up-task");
+    const blackoutScreen = document.querySelector(".blackout");
+    const confirmButton = document.querySelector(".confirm");  
+    const openPopUpButton = document.querySelector(".add-task-button");
+    const selectWindow = document.querySelector("#proj-names");
+    openPopUpButton.addEventListener('click',  ()=> {
+        popUp(popUpTaskScreen, blackoutScreen);
+        updateProjectList(selectWindow);
     });
-    confirm.addEventListener('click', ()=>{
-        TaskAdd();
-        popUpTask.style.display = "none";
-        blackout.style.display = "none";
+    confirmButton.addEventListener('click', ()=>{
+        taskAdd(selectWindow);
+        popDown(popUpTaskScreen,blackoutScreen);
     });
-}
+    
+};
 
-const popUp = function(popUp, blackout){
-    popUp.style.display = "flex";
-    blackout.style.display = "block";
-}
+const popDown = function(popUpSc, blackoutSc){
+    popUpSc.style.display = "none";
+    blackoutSc.style.display = "none";
+};
+const popUp = function(popUpSc, blackoutSc){
+    popUpSc.style.display = "flex";
+    blackoutSc.style.display = "block";
+};
 
-const TaskAdd = function(){
-    const projectCapsule = document.querySelector(".Work-ul");
-    // const obj = selectorOfProject();
-    // const ulClass = obj.projectClassArray;
-    // const projectsNames = obj.projectNameArray;
-    const userTitle = document.querySelector("#name").value;
-    const userDescrip = document.querySelector("#description").textContent;
-    const userDate = document.querySelector("#due-date").value;
-    const userPrio = document.querySelector('input[name="prio"]:checked').value; //selected checked value from radio
-    const task = TaskFactory(userTitle, userDescrip, userPrio, userDate, ".Work-ul");
+const taskAdd = function(selectWindow){
+    const obj = selectorOfProject();
+    const ulClass = obj.projectClassArray;
+    const thisClass = ulClass[selectWindow.selectedIndex].className;
+    const task = TaskFactory(thisClass);
+    taskArray.push(task);
+    const projectCapsule = document.querySelector(`.${thisClass}`);
     const taskCapsule = document.createElement("li");
-    taskCapsule.classList.add(`${task.prio}`);
+    taskCapsule.classList.add(`${task.priority}`);
+    taskCapsule.classList.add(`${task.projectFamily}`);
     taskCapsule.textContent = task.title;
     projectCapsule.appendChild(taskCapsule);
-}
+    thisPlay();
+};
 
-const selectorOfProject = function(){
-    const parent = document.querySelector(".projects-ul");
-    let availableProjectsLi = parent.children;
-    const projectsArray = [].slice.call(availableProjectsLi); //html collection to array
-    const projectClassArray = projectsArray.map(function(e){
-        return e.firstElementChild; //get ul class of projects to insert tasks into 
-    }); 
-    const projectNameArray = projectsArray.map(function(e){
-        return e.firstChild.textContent; //get name of projects to insert tasks into
-    });
-    return{projectClassArray, projectNameArray}; 
+
+const taskArrayUpdate = function(){
+    updatedArray = taskArray;
+    return updatedArray;
 }
 
 
+export {newTask, taskArrayUpdate}
