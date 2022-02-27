@@ -40,17 +40,11 @@ const popUp = function(popUpSc, blackoutSc){
 };
 
 const taskAdd = function(selectWindow){
-    // const obj = selectorOfProject();
-    // const ulClass = obj.projectClassArray;
-    // const thisClass = ulClass[selectWindow.selectedIndex].className;
     const projectsData = projectDisplay(selectWindow);
     const thisClass = projectsData.thisClass;
-
     const task = TaskFactory(thisClass);
     taskArray.push(task);
-
     projectAdd(projectsData, task);
-
     thisPlay();
 };
 
