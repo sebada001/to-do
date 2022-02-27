@@ -7,7 +7,7 @@ let updatedArray = [];
 const TaskFactory = (family) =>{
     const title = document.querySelector("#name").value;
     const description = document.querySelector("#description").textContent;
-    const dueDate = document.querySelector("#due-date").value;
+    const dueDate = new Date(document.querySelector("#due-date").value); //
     const priority = document.querySelector('input[name="prio"]:checked').value; //selected checked value from radio
     const projectFamily = family;
     return {title, description, priority, dueDate, projectFamily}
@@ -40,19 +40,37 @@ const popUp = function(popUpSc, blackoutSc){
 };
 
 const taskAdd = function(selectWindow){
+    // const obj = selectorOfProject();
+    // const ulClass = obj.projectClassArray;
+    // const thisClass = ulClass[selectWindow.selectedIndex].className;
+    const projectsData = projectDisplay(selectWindow);
+    const thisClass = projectsData.thisClass;
+
+    const task = TaskFactory(thisClass);
+    taskArray.push(task);
+
+    projectAdd(projectsData, task);
+
+    thisPlay();
+};
+
+const projectDisplay = function(selectWindow){
     const obj = selectorOfProject();
     const ulClass = obj.projectClassArray;
     const thisClass = ulClass[selectWindow.selectedIndex].className;
-    const task = TaskFactory(thisClass);
-    taskArray.push(task);
     const projectCapsule = document.querySelector(`.${thisClass}`);
     const taskCapsule = document.createElement("li");
+    return {taskCapsule, projectCapsule, thisClass}
+}
+
+const projectAdd = function(projectsData, task){
+    const taskCapsule = projectsData.taskCapsule;
+    const projectCapsule = projectsData.projectCapsule;
     taskCapsule.classList.add(`${task.priority}`);
     taskCapsule.classList.add(`${task.projectFamily}`);
     taskCapsule.textContent = task.title;
     projectCapsule.appendChild(taskCapsule);
-    thisPlay();
-};
+}
 
 
 const taskArrayUpdate = function(){
