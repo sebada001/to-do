@@ -1,36 +1,73 @@
-import { selectorOfProject } from "./projList.js";
 
+const projArray = [];
+
+const projectList = function(){
+    let thisArray = projArray;
+    return thisArray;
+}
 
 const ProjectFactory = (name) =>{
     let noSpaceName = name.replace(/\s/g, ''); //remove spaces from string for valid class name
-    const classTag = `class-${noSpaceName}-ul`; //add 'class' to each name so if user creates project named '123' class name is still valid
-    return {name, classTag}
+    const classTag = checkRepeatedClassName(`class-${noSpaceName}-ul`); //add 'class' to each name so if user creates project named '123' class name is still valid
+    let projTasks = [];
+    let greyedOut = false;
+    return {name, classTag, projTasks, greyedOut}
 };
 
-export default function newProject(){
+function newProject(){
     const butt = document.querySelector(".add-project-button");
     butt.addEventListener('click', projectAdd);
 }
 
 const projectAdd = function(){
+    let projectObj = ProjectFactory(prompt("What will this project be called?"));
+    if(!projectObj.name){
+        projectObj.name = "Unnamed";
+        projectObj.classTag = "class-unnamed-ul";
+    }
+    appendProj(projectObj);
+};
+
+
+const appendProj = function(proj){
     const container = document.querySelector(".projects-ul");
-    const projectObj = ProjectFactory(prompt("What will this project be called?")); //FIX BUG: EMPTY NAME WORKS
     const projectCapsule = document.createElement("li");
     const subcategory = document.createElement("ul");
-    subcategory.classList.add(checkRepeatedClassName(subcategory, projectObj.classTag));
-    projectCapsule.textContent = projectObj.name;
+    subcategory.classList.add(proj.classTag);
+    projectCapsule.textContent = proj.name;
     projectCapsule.appendChild(subcategory);
     container.appendChild(projectCapsule);
+    projArray.push(proj);
 }
 
-const checkRepeatedClassName = function(subc, newTag){
-    const projClasses = selectorOfProject().projectClassArray;
+const checkRepeatedClassName = function(newTag){
+    const projects = projectList();
+    const classArray = projects.map(function(obj){
+        return obj.classTag;
+    });
     let count = 0;
     let className = "";
-    for(let eachClass of projClasses){
-        if(eachClass.classList[0] == newTag){
+    let fullName = newTag.split("-"); 
+        fullName.shift(); 
+        fullName.pop(); 
+    let middleName= fullName.join(' ');
+
+    for(let eachClass of classArray){
+        if(eachClass == newTag){
             count ++;
         }};
-    count != 0 ? className = newTag+count : className = newTag;
+        //////
+    count != 0 ? className = `class-${middleName+count}-ul` : className = newTag;
     return className;
+};
+
+
+
+
+const initProjectOnly = function(){
+    const Work = ProjectFactory("Work");
+    appendProj(Work);
 }
+
+
+export {newProject, projectList, initProjectOnly};

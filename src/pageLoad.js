@@ -3,12 +3,21 @@ export default function appSkeleton(){
 `<div class="container">
 <div class="blackout"> </div>
 <div class="pop-up-project"> </div>
+<div class="pop-up-comments">
+  <button id="close-button">X</button>
+  <div id="comments-titles"><span id="task-title-c">Example</span>  <span id="task-project-c"> Proj</span> </div>
+  <div class="comments">
+    <p> Description: </p>
+    <textarea id="description-container">  </textarea>
+  </div>
+  <button id="complete-button">Mark as complete</button>
+</div>
 <div class="pop-up-task"> 
   <label for="name">Title (up to 20 characters):</label>
-  <input type="text" id="name" name="name" maxlength="20" size="13" placeholder="Potassium is very important">
+  <input type="text" id="name" name="name" maxlength="20" size="13" placeholder="Potassium is very important" onFocus="this.select()">
 
   <label for="description">Task description:</label>
-  <textarea id="description" name="description" rows="5" cols="33">I mustn't forget to peel the banana before I eat it... </textarea>
+  <textarea id="description" name="description" rows="5" cols="33" onFocus="this.select()">I mustn't forget to peel the banana before I eat it... </textarea>
 
   <label for="due-date">Due date:</label>
   <input type="date" id="due-date" name="due-date" value="2023-03-23" min="2018-01-01" max="2030-12-31"> 
@@ -43,10 +52,7 @@ export default function appSkeleton(){
       <button class="add-project-button">+</button>
     </div>
     <ul class="projects-ul">
-      <li>Work
-        <ul class="class-Work-ul"> 
-        </ul>
-      </li>
+
       
     </ul>
   </div>
