@@ -2,11 +2,14 @@ import {updateProjectList, taskToProjectList, projectDisplay} from './projList.j
 import thisPlay from './display.js';
 import {projectList} from './newProj.js';
 
+
 const taskArray = [];
 let updatedArray = [];
+let counter = 0;
 
 const TaskFactory = (family) =>{
-    let titleCheck = ""
+    counter ++;
+    let titleCheck = "";
     if(document.querySelector("#name").value == ""){
         titleCheck = "Unnamed Task";
     }else{
@@ -14,11 +17,31 @@ const TaskFactory = (family) =>{
     };
     const title = checkForRepeatedTaskName(titleCheck);
     const description = document.querySelector("#description").value;
-    const dueDate = new Date(document.querySelector("#due-date").value); //
+    const userDate = new Date(document.querySelector("#due-date").value); //
+    const dateISO = userDate.toISOString()
+    const dueDate = dateISO.substr(0, 10);
     const priority = document.querySelector('input[name="prio"]:checked').value; //selected checked value from radio
     const projectFamily = family;
     const id = `${title}+${priority[0]}`;
-    return {title, description, priority, dueDate, projectFamily, id}
+    taskWindowFun(counter);
+    return {title, description, priority, dueDate, projectFamily, id, counter}
+};
+function taskWindowFun(counter){
+    const before = document.querySelector(".pop-up-task");
+    const parent = document.querySelector(".container");
+    const htmlSkel =
+            `   <button class="close-button-c">X</button>
+                <div class="comments-titles-c"><span class="task-title-c">Example</span>  <span class="task-project-c"> Proj</span> </div>
+                <div class="comments">
+                    <p> Description: </p>
+                    <textarea class="description-container">  </textarea>
+                </div>
+                <button class="complete-button-c">Mark as complete</button>`;
+    const newWindow = document.createElement("div");
+    newWindow.classList.add("pop-up-comments")
+    newWindow.id = "c"+counter
+    newWindow.innerHTML = htmlSkel;
+    parent.insertBefore(newWindow, before);
 };
 
 const taskAdd = function(selectWindow){
@@ -29,7 +52,7 @@ const taskAdd = function(selectWindow){
     thisProj.projTasks.push(task)
     taskArray.push(task);
     taskToProjectList(projectsData, task);
-    thisPlay();
+    thisPlay(task);
 };
 let count = 0;
 const checkForRepeatedTaskName = function(toCheck){

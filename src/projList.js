@@ -32,10 +32,6 @@ const tasksColorBlack = function(elId){
 
 const tasksInProjs = function(){
     const tasksInProjs = document.querySelectorAll(".projects-ul>li>ul>li");
-    // const tasksArray = [].slice.call(tasksInProjs); //html collection to array
-    // const fullIdList = tasksArray.map(function(li){
-    //     return li.id;
-    // });
     return tasksInProjs;
 }
 

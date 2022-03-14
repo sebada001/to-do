@@ -2,16 +2,16 @@ export default function appSkeleton(){
     const htmlSkelly =
 `<div class="container">
 <div class="blackout"> </div>
-<div class="pop-up-project"> </div>
-<div class="pop-up-comments">
-  <button id="close-button">X</button>
-  <div id="comments-titles"><span id="task-title-c">Example</span>  <span id="task-project-c"> Proj</span> </div>
-  <div class="comments">
-    <p> Description: </p>
-    <textarea id="description-container">  </textarea>
-  </div>
-  <button id="complete-button">Mark as complete</button>
+<div class="pop-up-project"> 
+  <header class="proj-header">Name your project 
+    <button class="close-button-p">X</button>
+  </header>
+  <form id="form-pop-up" onsubmit="return false">
+  <input type="text" id="proj-name" name="proj-name" maxlength="20" minlength="2" size="13" required onFocus="this.select()">
+  <button class="proj-submit" type="submit" form="form-pop-up">Submit</button>
+  </form>
 </div>
+
 <div class="pop-up-task"> 
   <label for="name">Title (up to 20 characters):</label>
   <input type="text" id="name" name="name" maxlength="20" size="13" placeholder="Potassium is very important" onFocus="this.select()">
@@ -20,7 +20,7 @@ export default function appSkeleton(){
   <textarea id="description" name="description" rows="5" cols="33" onFocus="this.select()">I mustn't forget to peel the banana before I eat it... </textarea>
 
   <label for="due-date">Due date:</label>
-  <input type="date" id="due-date" name="due-date" value="2023-03-23" min="2018-01-01" max="2030-12-31"> 
+  <input type="date" id="due-date" name="due-date" value="" min="2018-01-01" max="2030-12-31"> 
 
   <div class="radio-container"> Priority:
   <input type="radio" id="urgent" name="prio" value="urgent" checked class="radio">
@@ -70,7 +70,12 @@ export default function appSkeleton(){
     </div>
 </div>`;
 
+
 document.body.innerHTML = htmlSkelly;
+const today = new Date(); 
+const dateISO = today.toISOString()
+const simpleDate = dateISO.substr(0, 10);
+document.getElementById('due-date').value = simpleDate;
 
 const popUpTaskScreen = document.querySelector(".pop-up-task");
 const confirmButton = document.querySelector(".confirm");  

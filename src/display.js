@@ -2,16 +2,17 @@
 import { taskArrayUpdate, blackOn, blackOff } from "./newTask";
 import { tasksColorGrey, tasksColorBlack } from "./projList";
 
-
-
-export default function thisPlay(){
+export default function thisPlay(taskInput){
     const container = document.querySelector(".tasks-container");
-    const toAdd = latestTask();
+    const toAdd = taskInput;
+    const idThis = toAdd.id;
     const taskLeft = document.createElement('div');
     const taskRight = document.createElement('div');
+    const dateRight = document.createElement('div');
+    const projRight = document.createElement('div');
     const taskDiv = document.createElement('div');
-    const taskDateArray = toAdd.dueDate.toString().split(" ").slice(0, 4);
-    const taskDateDisplay = taskDateArray.join(" ");
+    const counter = toAdd.counter;
+    const taskDateDisplay = toAdd.dueDate;
     const description = toAdd.description;
     taskDiv.classList.add("task");
     taskLeft.classList.add("task-left");
@@ -22,15 +23,23 @@ export default function thisPlay(){
         family.shift(); 
         family.pop(); 
         let displayFamily = family.join(' ');
-    taskRight.textContent = `${taskDateDisplay}\u00A0\u00A0\u00A0\u00A0${displayFamily}`
+    dateRight.textContent = taskDateDisplay;
+    projRight.textContent = displayFamily;
     taskLeft.classList.add(`${toAdd.priority}-task`);
+    taskRight.append(dateRight, projRight);
     taskDiv.append(taskLeft, taskRight);
     taskLeft.style.color = "black";
     taskLeft.addEventListener('click', (e)=> {
-            taskInfo(e, displayFamily, description);
+            taskInfo(e, displayFamily, findDescription(idThis), counter);
     });
     container.appendChild(taskDiv);
 };
+
+function findDescription(id){
+    const tasks = taskArrayUpdate();
+    const match = tasks.find(task => task.id === id);
+    return match.description;
+}
 
 function opTaskInfo(w){
     w.style.display = "flex";
@@ -40,14 +49,17 @@ function closeTaskInfo(w){
     w.style.display = "none";
 };
 
+function createWindow(){
 
-function taskInfo(ev, fam, description){
-    const closeButton = document.querySelector("#close-button");
-    const completeButton = document.querySelector("#complete-button");
-    const window = document.querySelector(".pop-up-comments");
-    const taskTitleDOM = document.querySelector("#task-title-c");
-    const taskFamilyDOM = document.querySelector("#task-project-c");
-    const descriptionDOM = document.querySelector("#description-container");
+};
+
+function taskInfo(ev, fam, description, counter){
+    const window = document.querySelector(`#c${counter}`);
+    const closeButton = window.querySelector(".close-button-c");
+    const completeButton = window.querySelector(".complete-button-c");
+    const taskTitleDOM = window.querySelector(".task-title-c");
+    const taskFamilyDOM = window.querySelector(".task-project-c");
+    const descriptionDOM = window.querySelector(".description-container");
     taskTitleDOM.innerText = ev.target.textContent;
     taskFamilyDOM.innerText = fam;
     descriptionDOM.innerText = description;
@@ -98,13 +110,12 @@ function greyOut(e){
         e.target.classList.remove("grey-done");
         tasksColorBlack(e.target.id);
     };
-}
-
+};
 
 function latestTask(){
     const taskArray = taskArrayUpdate();
     let latestTask = taskArray[taskArray.length-1];
     return latestTask;
-}
+};
 
 
