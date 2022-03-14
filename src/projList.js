@@ -46,7 +46,6 @@ const taskToProjectList = function(projectsData, task){
     projectCapsule.appendChild(taskCapsule);
 }
 
-
 const projectDisplay = function(selectWindow){
     const obj = listOfProjects();
     const ulClass = obj.projectsClassArray;

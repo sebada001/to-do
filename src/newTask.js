@@ -23,8 +23,9 @@ const TaskFactory = (family) =>{
     const priority = document.querySelector('input[name="prio"]:checked').value; //selected checked value from radio
     const projectFamily = family;
     const id = `${title}+${priority[0]}`;
+    const completeStatus = false;
     taskWindowFun(counter);
-    return {title, description, priority, dueDate, projectFamily, id, counter}
+    return {title, description, priority, dueDate, projectFamily, id, counter, completeStatus}
 };
 function taskWindowFun(counter){
     const before = document.querySelector(".pop-up-task");

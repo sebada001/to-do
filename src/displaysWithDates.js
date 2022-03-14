@@ -1,8 +1,7 @@
 import thisPlay from './display.js';
 import {taskArrayUpdate} from './newTask.js';
-import { add, isMatch, format } from 'date-fns';
+import { add, isMatch, format, compareAsc, parseISO } from 'date-fns';
 import {removeAllChildNodes} from './projList.js';
-// window.process.env.TZ = 'Etc/UTC';
 
 function addDateEvListeners(){
     const todayButt = document.querySelector(".today");
@@ -24,8 +23,14 @@ function displayTodayTasks(){
    const container = document.querySelector(".tasks-container");
    removeAllChildNodes(container);
    matchingTasks.forEach(t => thisPlay(t));
-//    console.log(matchingTasks);
 };
+
+function displayNextWeekTasks(){
+    const matchingTasks = nextWeekTasks();
+    const container = document.querySelector(".tasks-container");
+    removeAllChildNodes(container);
+    matchingTasks.forEach(t => thisPlay(t));
+ };
 
 function displayAllTasks(){
     const tasks = taskArrayUpdate();
@@ -46,6 +51,18 @@ function todayTasks(){
     return matchingTasks;
 }
 
+function nextWeekTasks(){
+    const nextWeek = add(new Date(),{weeks: 1});
+    const tasks = taskArrayUpdate();
+    const nextWeekFormatted = format(nextWeek,'yyyy-MM-dd');
+    const matchingTasks = [];
+    for(let task of tasks){
+        if(compareAsc(parseISO(task.dueDate), parseISO(nextWeekFormatted)) == -1){
+            matchingTasks.push(task);
+        };
+    };
+    return matchingTasks;
+}
 
 
 export {addDateEvListeners};

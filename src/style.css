@@ -210,6 +210,7 @@ option {
 }
 
 .pop-up-project {
+  font-size: 20px;
   display: none;
   background-color: rgb(231, 231, 231);
   border: 5px solid rgb(30, 155, 97);
@@ -249,6 +250,7 @@ option {
   border-radius: 5px;
   color: white;
   padding: 6px 0;
+  font-size: 16px;
 }
 
 .proj-submit:hover {
@@ -329,6 +331,7 @@ button:hover {
 
 button {
   transition: all 0.15s ease-in-out;
+  cursor: pointer;
 }
 
 /* this selects the tasks listed below projects*/
@@ -414,15 +417,22 @@ button {
   display: flex;
   align-items: center;
   transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
 }
 
 .task-right {
   display: flex;
   align-items: center;
   transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
-  width: 170px;
+  min-width: 170px;
   justify-content: space-between;
   overflow: hidden;
+}
+.proj-limit {
+  max-width: 60px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .task-right > div {
@@ -483,3 +493,30 @@ button {
   background-color: rgb(235, 235, 235) !important;
   border: 2px rgb(168, 168, 168) solid !important;
 }
+
+.delete-task {
+  font-size: 10px;
+  font-family: "Lato";
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  font-weight: 700;
+  background-color: darkgray;
+  color: whitesmoke;
+  display: inline-block;
+  text-align: center;
+}
+
+.delete-task:hover {
+  background-color: red;
+  cursor: pointer;
+}
+.date-panel li:hover {
+  cursor: pointer;
+}
+.right {
+  cursor: pointer;
+}
+/* .left {
+  cursor: pointer;
+} */
