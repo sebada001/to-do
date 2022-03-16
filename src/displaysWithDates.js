@@ -1,4 +1,4 @@
-import thisPlay from './display.js';
+import {thisPlay} from './display.js';
 import {taskArrayUpdate} from './newTask.js';
 import { add, isMatch, format, compareAsc, parseISO } from 'date-fns';
 import {removeAllChildNodes} from './projList.js';
@@ -65,4 +65,4 @@ function nextWeekTasks(){
 }
 
 
-export {addDateEvListeners};
+export {addDateEvListeners, displayAllTasks};

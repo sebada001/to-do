@@ -517,6 +517,64 @@ button {
 .right {
   cursor: pointer;
 }
-/* .left {
+.projects-ul li {
   cursor: pointer;
-} */
+}
+
+.trash-button {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  left: 25px;
+  background-image: url("./img/trash.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  /* background-blend-mode: color-burn; */
+  /* background-color: rgba(16, 102, 62, 0.5); */
+  margin-top: 0.4rem;
+  border-radius: 2px;
+}
+
+.trash-button:hover {
+  cursor: pointer;
+}
+
+.pop-up-readMe {
+  font-size: 20px;
+  display: none;
+  background-color: rgb(231, 231, 231);
+  border: 5px solid rgb(30, 155, 97);
+  border-radius: 10px;
+  position: absolute;
+  width: 800px;
+  min-height: 300px;
+  left: calc(50% - 350px);
+  top: calc(50% - 150px);
+  z-index: 10;
+  /* margin: 1rem; */
+  flex-direction: column;
+}
+
+.pop-up-readMe p {
+  margin: 1rem;
+}
+.pop-up-readMe h4 {
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+.close-button-r {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  border-radius: 50%;
+  border: 2px solid rgb(64, 77, 72);
+  background-color: rgb(30, 155, 97);
+  color: white;
+  height: 1.2rem;
+  width: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+}

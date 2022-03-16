@@ -2,7 +2,7 @@
 import { taskArrayUpdate, blackOn, blackOff, returnTasks } from "./newTask";
 import { tasksColorGrey, tasksColorBlack } from "./projList";
 
-export default function thisPlay(taskInput){
+function thisPlay(taskInput){
     const container = document.querySelector(".tasks-container");
     const toAdd = taskInput;
     const idThis = toAdd.id;
@@ -169,3 +169,4 @@ function latestTask(){
 };
 
 
+export {thisPlay, deleterFunction}

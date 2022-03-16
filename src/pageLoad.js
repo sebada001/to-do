@@ -11,10 +11,23 @@ export default function appSkeleton(){
   <button class="proj-submit" type="submit" form="form-pop-up">Submit</button>
   </form>
 </div>
+<div class="pop-up-readMe">
+ <header class="readMe-header"></header>
+ <button class="close-button-r">X</button>
+  <h4>To-Do web app, developed with vanilla JS and CSS + webpack.</h4> <br>
+  <p>User guide:<br>
+  Today - Next Week - All, display all tasks by date.<br>
+  Trash icon next to 'Projects' activates delete mode to delete projects, re-clicking it deactive it.<br>
+  '+' symbol next to 'Projects' creates a new project.<br>
+  '+' symbol below task list creates a new task.<br>
+  Clicking on a task name gives you more of the task information, you can change the description as needed.<br>
+  Clicking on the red button at the right of each task deletes it.<br>
+  Marking tasks as done greys them out.</p>
+</div>
 
 <div class="pop-up-task"> 
   <label for="name">Title (up to 20 characters):</label>
-  <input type="text" id="name" name="name" maxlength="20" size="13" placeholder="Potassium is very important" onFocus="this.select()">
+  <input type="text" id="name" name="name" maxlength="20" minlength="2" size="13" placeholder="Potassium is very important" onFocus="this.select()">
 
   <label for="description">Task description:</label>
   <textarea id="description" name="description" rows="5" cols="33" onFocus="this.select()">I mustn't forget to peel the banana before I eat it... </textarea>
@@ -48,6 +61,7 @@ export default function appSkeleton(){
   </ul>
   <div class="projects">
     <div class="projects-title">
+      <div class="trash-button"> </div>
       <h2>Projects</h2>
       <button class="add-project-button">+</button>
     </div>

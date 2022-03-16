@@ -1,5 +1,5 @@
 import {updateProjectList, taskToProjectList, projectDisplay} from './projList.js';
-import thisPlay from './display.js';
+import {thisPlay} from './display.js';
 import {projectList} from './newProj.js';
 
 
@@ -45,7 +45,7 @@ function taskWindowFun(counter){
     parent.insertBefore(newWindow, before);
 };
 
-const taskAdd = function(selectWindow){
+const taskAdd = function(selectWindow, popUpTaskScreen){
     const projectsData = projectDisplay(selectWindow);
     const thisClass = projectsData.thisClass;
     const task = TaskFactory(thisClass);
@@ -54,6 +54,7 @@ const taskAdd = function(selectWindow){
     taskArray.push(task);
     taskToProjectList(projectsData, task);
     thisPlay(task);
+    popDown(popUpTaskScreen);
 };
 let count = 0;
 const checkForRepeatedTaskName = function(toCheck){
@@ -82,9 +83,14 @@ const newTask = function(){
         updateProjectList(selectWindow);
     });
     confirmButton.addEventListener('click', ()=>{
-        taskAdd(selectWindow);
-        popDown(popUpTaskScreen);
+        taskAdd(selectWindow, popUpTaskScreen);
     });
+    document.addEventListener('keydown', (e)=>{
+        if (e.code === "Enter" && popUpTaskScreen.style.display == "flex" ) {
+            confirmButton.click()
+        };
+    });
+    
     
 };
 
