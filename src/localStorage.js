@@ -17,26 +17,18 @@ function clearProjects(){
 };
 
 function getStorage(){
-    //only if localStorage is not empty
     let lsLength = localStorage.length;
     let arrayOfKeys = [];
     let projectsToStore = [];
-    
     for(let i = 0; i<lsLength; i++){
         arrayOfKeys.push(localStorage.key(i));
     };
-
     if(arrayOfKeys.length > 0){
         for(let key of arrayOfKeys){
             projectsToStore.push(JSON.parse(localStorage.getItem(`${key}`)));
-            // console.log(JSON.parse(JSON.stringify(projectsToStore)));
         };
         resetProjArray(projectsToStore);
     };
-
-    //clear projectList
-    //repopulate project list with projectsToStore
-    //check if have to update view of them somewhere (prob not)
 };
 
 export {storeProjects, clearProjects, getStorage};

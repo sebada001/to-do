@@ -46,9 +46,7 @@ function thisPlay(taskInput){
         taskLeft.classList.add("grey-done");
         greyOut(taskLeft);
         tasksColorGrey(idThis)
-        console.log(idThis)
     };
-    
 };
 
 function deleterFunction(e, id, fam){

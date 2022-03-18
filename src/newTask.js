@@ -1,6 +1,6 @@
 import {updateProjectList, taskToProjectList, projectDisplay} from './projList.js';
 import {thisPlay} from './display.js';
-import {projectList} from './newProj.js';
+import {projectList, returnProjArray} from './newProj.js';
 import { clearProjects, storeProjects } from './localStorage.js';
 
 
@@ -89,9 +89,13 @@ const newTask = function(){
     const openPopUpButton = document.querySelector(".add-task-button");
     const selectWindow = document.querySelector("#proj-names");
     openPopUpButton.addEventListener('click',  ()=> {
+        if(returnProjArray().length > 0){
         document.querySelector("#name").value = "New Task";
         popUp(popUpTaskScreen);
         updateProjectList(selectWindow);
+        }else{
+            alert('Please create a project to store Tasks!')
+        };
     });
     confirmButton.addEventListener('click', ()=>{
         taskAdd(selectWindow, popUpTaskScreen);

@@ -19,12 +19,10 @@ function resetProjArray(toAdd){
     const allTasks = projArray.map(x => x.projTasks).filter(y => y.length> 0);
     const flattenedArray = Array.prototype.concat.apply([], allTasks);
     flattenedArray.forEach((task) => {
-        // console.log(JSON.parse(JSON.stringify(task)));
         counterAdd();
         eachTaskWindow(counter);
         taskArray.push(task);
         taskToProjectList(whereIsTask(task.projectFamily), task);
-        // toggleCompleteStatus(task.id);
         thisPlay(task);
     });
 };
