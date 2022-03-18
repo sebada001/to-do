@@ -1,10 +1,40 @@
-import { blackOn, blackOff, returnTasks } from "./newTask.js";
-import { thisPlay } from "./display.js";
+import { blackOn, blackOff, returnTasks, eachTaskWindow, counter, counterAdd } from "./newTask.js";
+import { thisPlay, toggleCompleteStatus } from "./display.js";
 import { displayAllTasks } from "./displaysWithDates.js";
-import { removeAllChildNodes } from "./projList.js";
-
+import { removeAllChildNodes, projectDisplay, taskToProjectList } from "./projList.js";
+import { storeProjects, clearProjects } from "./localStorage.js";
 
 const projArray = [];
+
+function returnProjArray(){
+    return projArray;
+}
+
+function resetProjArray(toAdd){
+    const selectWindow = document.querySelector("#proj-names");
+    const taskArray = returnTasks();
+    taskArray.splice(0, taskArray.length)
+    projArray.splice(0, projArray.length);
+    toAdd.forEach(proj => appendProj(proj));
+    const allTasks = projArray.map(x => x.projTasks).filter(y => y.length> 0);
+    const flattenedArray = Array.prototype.concat.apply([], allTasks);
+    flattenedArray.forEach((task) => {
+        // console.log(JSON.parse(JSON.stringify(task)));
+        counterAdd();
+        eachTaskWindow(counter);
+        taskArray.push(task);
+        taskToProjectList(whereIsTask(task.projectFamily), task);
+        // toggleCompleteStatus(task.id);
+        thisPlay(task);
+    });
+};
+function whereIsTask(thisClass){
+    const projectCapsule = document.querySelector(`.${thisClass}`);
+    const taskCapsule = document.createElement("li");
+    return {projectCapsule, taskCapsule}
+
+};
+
 
 const projectList = function(){
     let thisArray = projArray;
@@ -37,7 +67,8 @@ function checkForm(){
     blackOff();
     projWindowOff();
     appendProj(projectObj);
-    inputArea.value = ""
+    inputArea.value = "";
+    storeProjects();
     };
 };
 
@@ -60,11 +91,15 @@ const appendProj = function(proj){
     projArray.push(proj);
     projectCapsule.addEventListener('click', ()=>{
         if(!trasher == true){
+        clearProjects();
         deleteProject(projectCapsule, proj.classTag, proj.projTasks);
+        storeProjects();
     }else{
         displayProject(proj);
     }
-    })
+    });
+    clearProjects();
+    storeProjects();
 };
 
 function displayProject(proj){
@@ -72,7 +107,7 @@ function displayProject(proj){
     const container = document.querySelector(".tasks-container");
     removeAllChildNodes(container);
     tasks.forEach(t => thisPlay(t));
-}
+};
 
 function deleteProject(projCap, projClass, [...projTasks]){
     let allTasks = returnTasks();
@@ -90,7 +125,6 @@ function deleteProject(projCap, projClass, [...projTasks]){
         };
     };
     displayAllTasks();
-
 };
 
 let count = 0;
@@ -141,7 +175,7 @@ if(trasher == false){
     };
 };
 
-const initProjectOnly = function(){
+function initProjectOnly(){
     const closeButt = document.querySelector(".close-button-p");
     closeButt.addEventListener('click', ()=>{
         blackOff();
@@ -151,13 +185,17 @@ const initProjectOnly = function(){
     submitButt.addEventListener('click', ()=>{
     checkForm();
     });
-    const Work = ProjectFactory("Work");
-    appendProj(Work);
     const trashButton = document.querySelector(".trash-button");
     trashButton.addEventListener('click', (e)=>{
         trashMode(e);
     });
 };
 
+function ifEmpty(){
+    if(projArray.length == 0){
+        const Work = ProjectFactory("Work");
+        appendProj(Work);
+    };
+}
 
-export {newProject, projectList, initProjectOnly};
+export {newProject, projectList, initProjectOnly, resetProjArray, ifEmpty, returnProjArray};

@@ -1,6 +1,7 @@
-
-import { taskArrayUpdate, blackOn, blackOff, returnTasks } from "./newTask";
-import { tasksColorGrey, tasksColorBlack } from "./projList";
+import { taskArrayUpdate, blackOn, blackOff, returnTasks } from "./newTask.js";
+import { tasksColorGrey, tasksColorBlack } from "./projList.js";
+import { clearProjects, storeProjects} from "./localStorage.js";
+import { returnProjArray } from './newProj.js'
 
 function thisPlay(taskInput){
     const container = document.querySelector(".tasks-container");
@@ -35,16 +36,19 @@ function thisPlay(taskInput){
     taskDiv.append(taskLeft, taskRight);
     taskLeft.style.color = "black";
     taskLeft.addEventListener('click', (e)=> {
-        taskInfo(e, displayFamily, findDescription(idThis), counter, idThis);
+        taskInfo(e, displayFamily, counter, idThis, complete);
     });
     deleteTask.addEventListener('click', (e)=>{
         deleterFunction(e, idThis, projectFam);
     });
     container.appendChild(taskDiv);
-    if(complete){
+    if(complete == true){
         taskLeft.classList.add("grey-done");
         greyOut(taskLeft);
+        tasksColorGrey(idThis)
+        console.log(idThis)
     };
+    
 };
 
 function deleterFunction(e, id, fam){
@@ -64,21 +68,25 @@ function deleterFunction(e, id, fam){
     }
 };
 
-function findDescription(id){
-    const tasks = taskArrayUpdate();
-    const match = tasks.find(task => task.id === id);
-    return match.description;
-}
-
 function toggleCompleteStatus(id){
     const tasks = returnTasks();
     const match = tasks.find(task => task.id === id);
+    let b00l = false;
     if(match.completeStatus == false){
         match.completeStatus = true;
+        b00l = true;
     } else{
         match.completeStatus = false;
+        b00l = false;
     };
-    console.log(match);
+    const allProjects = returnProjArray();
+    for(let i = 0; i< allProjects.length; i++){
+        for(let j = 0; j < allProjects[i].projTasks.length; j++){
+            if(allProjects[i].projTasks.find(task => task.id === id)){
+                allProjects[i].projTasks.find(task => task.id === id).completeStatus = b00l;
+            };
+        };
+    };
 };
 
 function opTaskInfo(w){
@@ -89,23 +97,37 @@ function closeTaskInfo(w){
     w.style.display = "none";
 };
 
-function taskInfo(ev, fam, description, counter, id){
+function matchTaskById(id, allTasks){
+    const match = allTasks.find(task => task.id === id);
+    return match;
+}
+
+function taskInfo(ev, fam, counter, id, complete){
+    const allTasks = returnTasks();
+    const thisTaskInGeneralArray = matchTaskById(id, allTasks);
     const window = document.querySelector(`#c${counter}`);
     const closeButton = window.querySelector(".close-button-c");
     const completeButton = window.querySelector(".complete-button-c");
     const taskTitleDOM = window.querySelector(".task-title-c");
     const taskFamilyDOM = window.querySelector(".task-project-c");
     const descriptionDOM = window.querySelector(".description-container");
+
     taskTitleDOM.innerText = ev.target.textContent;
     taskFamilyDOM.innerText = fam;
-    descriptionDOM.innerText = description;
+    descriptionDOM.innerText = thisTaskInGeneralArray.description;
 
-    if(ev.target.classList.contains("grey-done")){
+    let completeStat = complete;
+
+    if(complete){
         completeButton.classList.add("toggle");
         completeButton.textContent = "Complete";
+        completeStat = true;
+        
     }else{
         completeButton.classList.remove("toggle");
         completeButton.textContent = "Mark as complete";
+        completeStat = false;
+        
     }
 
     opTaskInfo(window);
@@ -113,12 +135,16 @@ function taskInfo(ev, fam, description, counter, id){
     closeButton.addEventListener('click', ()=>{
         blackOff();
         closeTaskInfo(window);
+        thisTaskInGeneralArray.description = descriptionDOM.value;
+        // thisTaskInGeneralArray.completeStatus = completeStat;
         closeButton.replaceWith(closeButton.cloneNode(true));  //remove event listeners
-        completeButton.replaceWith(completeButton.cloneNode(true));  
+        completeButton.replaceWith(completeButton.cloneNode(true));
+        clearProjects();
+        storeProjects();  
     });
     completeButton.addEventListener('click', (e)=>{
         toggleButton(e, ev);
-        toggleCompleteStatus(id, ev);
+        toggleCompleteStatus(id);
     });
 };
 
@@ -159,7 +185,7 @@ function greyOut(e){
             e.parentNode.style.color = "black";
             e.classList.remove("grey-done");
         };
-    }
+    };
 };
 
 function latestTask(){
@@ -169,4 +195,4 @@ function latestTask(){
 };
 
 
-export {thisPlay, deleterFunction}
+export {thisPlay, deleterFunction, matchTaskById, toggleCompleteStatus}

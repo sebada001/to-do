@@ -14,6 +14,7 @@ const listOfProjects = function(){
 
 const tasksColorGrey = function(elId){
     const domList = tasksInProjs();
+    console.log(domList)
     for(let task of domList){
         if(task.id == elId){
         task.style.color = "grey";
@@ -45,6 +46,10 @@ const taskToProjectList = function(projectsData, task){
     taskCapsule.setAttribute('id', task.id);
     projectCapsule.appendChild(taskCapsule);
 }
+/////////////
+
+////////////
+
 
 const projectDisplay = function(selectWindow){
     const obj = listOfProjects();
@@ -69,13 +74,12 @@ const updateProjectList = function(selectWindow) {
         let middleName = together.join(' ');
         useNames.push(middleName);
     };
-    
-       for (let each of useNames){
-            let menuOption = document.createElement("option");
-            menuOption.value = each;
-            menuOption.text = each;
-            selectWindow.appendChild(menuOption); 
-        };
+    for (let each of useNames){
+        let menuOption = document.createElement("option");
+        menuOption.value = each;
+        menuOption.text = each;
+        selectWindow.appendChild(menuOption); 
+    };
 };
 
 function removeAllChildNodes(parent) {

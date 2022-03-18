@@ -1,14 +1,19 @@
 import {updateProjectList, taskToProjectList, projectDisplay} from './projList.js';
 import {thisPlay} from './display.js';
 import {projectList} from './newProj.js';
+import { clearProjects, storeProjects } from './localStorage.js';
 
 
 const taskArray = [];
 let updatedArray = [];
 let counter = 0;
 
-const TaskFactory = (family) =>{
-    counter ++;
+function counterAdd(){
+    counter += 1;
+}
+
+const TaskFactory = (family, complete) =>{
+    counterAdd();
     let titleCheck = "";
     if(document.querySelector("#name").value == ""){
         titleCheck = "Unnamed Task";
@@ -23,11 +28,15 @@ const TaskFactory = (family) =>{
     const priority = document.querySelector('input[name="prio"]:checked').value; //selected checked value from radio
     const projectFamily = family;
     const id = `${title}+${priority[0]}`;
-    const completeStatus = false;
-    taskWindowFun(counter);
+    
+    let completeStatus = false;
+    if(complete != undefined){
+        completeStatus = complete;
+    };
+    eachTaskWindow(counter);
     return {title, description, priority, dueDate, projectFamily, id, counter, completeStatus}
 };
-function taskWindowFun(counter){
+function eachTaskWindow(counter){
     const before = document.querySelector(".pop-up-task");
     const parent = document.querySelector(".container");
     const htmlSkel =
@@ -54,6 +63,8 @@ const taskAdd = function(selectWindow, popUpTaskScreen){
     taskArray.push(task);
     taskToProjectList(projectsData, task);
     thisPlay(task);
+    clearProjects();
+    storeProjects();
     popDown(popUpTaskScreen);
 };
 let count = 0;
@@ -78,7 +89,7 @@ const newTask = function(){
     const openPopUpButton = document.querySelector(".add-task-button");
     const selectWindow = document.querySelector("#proj-names");
     openPopUpButton.addEventListener('click',  ()=> {
-        document.querySelector("#name").value = "New Project";
+        document.querySelector("#name").value = "New Task";
         popUp(popUpTaskScreen);
         updateProjectList(selectWindow);
     });
@@ -90,8 +101,6 @@ const newTask = function(){
             confirmButton.click()
         };
     });
-    
-    
 };
 
 const blackOff = function(){
@@ -125,4 +134,4 @@ const returnTasks = function(){
 }
 
 
-export {newTask, taskArrayUpdate, returnTasks, blackOn, blackOff}
+export {newTask, taskArrayUpdate, returnTasks, blackOn, blackOff, TaskFactory, eachTaskWindow, counter, counterAdd}

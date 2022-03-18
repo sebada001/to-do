@@ -11,7 +11,6 @@ close.addEventListener('click', ()=>{
     closeInfo(readMe);
 });
 };
-
 function opInfo(readMe){
     readMe.style.display = "flex"
     blackOn();
@@ -19,5 +18,5 @@ function opInfo(readMe){
 function closeInfo(readMe){
     readMe.style.display = "none"
     blackOff();
-}
+};
 export {infoInitialState}
